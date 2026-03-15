@@ -21,6 +21,19 @@
                 divs.textContent = `${i+1}`;
                 container.appendChild(divs);
             };
+
+            
+            container.addEventListener('mouseover', (event) => {
+                if (event.target.classList.contains('items')) {
+                    event.target.style.backgroundColor = 'black';
+                }
+            });
+
+            container.addEventListener('mouseout', (event) => {
+                if (event.target.classList.contains('items')) {
+                    event.target.style.backgroundColor = '';
+                }
+            });
         </script>
     </body>
 </html>
