@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>etch-a-sketch</title>
         <link rel="stylesheet" href="etch-a-sketch.css">
     </head>
     <body>
-        <div id='container'>
-
-        </div>
+        <h1>Etch-A-Sketch</h1>
+        <div class='container'></div>
 
         <script>
-            const container = document.querySelector('#container');
+            const container = document.querySelector('.container');
             let gridsize = 16;
 
             for (let i = 0; i < gridsize; i++) {
-                const div = document.createElement('div');
+                const divs = document.createElement('div');
                 // use the classList API to add class
-                div.classList.add('Items');
-                div.textContent = `${i+1}`;
-                container.appendChild(div);
+                divs.classList.add('items');
+                divs.textContent = `${i+1}`;
+                container.appendChild(divs);
             };
-            
-
         </script>
     </body>
 </html>
