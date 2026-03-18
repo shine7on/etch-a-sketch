@@ -8,32 +8,105 @@
     </head>
     <body>
         <h1>Etch-A-Sketch</h1>
+
+        <form>
+            <label for="size">Enter a grid size: </label>
+            <input 
+                type="number" 
+                name="size" id='size' 
+                min="1" max='100'
+                required><br>
+            <button id="gridsize">Enter</button>
+        </form>
+
         <div class='container'></div>
 
+        <label class="switch">
+            <input type="checkbox" id="toggle">Color 
+            <span class="slider"></span>
+        </label>
+
         <script>
-            const container = document.querySelector('.container');
             let gridsize = 16;
+            let isBlack = true;
+
+            const button = document.getElementById('gridsize');
+            const container = document.querySelector('.container');
+            const toggle = document.getElementById('toggle')
+
+            container.style.setProperty('--repeat-count', 4);
 
             for (let i = 0; i < gridsize; i++) {
                 const divs = document.createElement('div');
                 // use the classList API to add class
                 divs.classList.add('items');
-                divs.textContent = `${i+1}`;
                 container.appendChild(divs);
             };
 
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const input = document.getElementById("size");
+
+                if (!input.checkValidity()) {
+                    input.reportValidity(); // shows browser error popup
+                    return;
+                }
+
+                const size = input.value;
+
+                // remove cells from previous setting
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                gridsize = size*size;
+
+                container.style.setProperty('--repeat-count', size);
+                
+                // construct new grids
+                for (let i = 0; i < gridsize; i++) {
+                    const divs = document.createElement('div');
+                    // use the classList API to add class
+                    divs.classList.add('items');
+                    container.appendChild(divs);
+                };
+            });
             
             container.addEventListener('mouseover', (event) => {
                 if (event.target.classList.contains('items')) {
-                    event.target.style.backgroundColor = 'black';
+                    if (isBlack) {
+                        event.target.style.backgroundColor = 'black';
+                    }
+                    else {
+                        event.target.style.backgroundColor = getRandomColor();
+                    }
                 }
             });
 
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#'
+                for (let i=0; i<6; i++) {
+                    r = Math.floor(Math.random() * 16)
+                    color += letters[r]
+                }
+                return color
+            };
+
+            
+            toggle.addEventListener('click', (event) => {
+                isBlack = !isBlack;
+            });
+            
+
+
+            /*
             container.addEventListener('mouseout', (event) => {
                 if (event.target.classList.contains('items')) {
                     event.target.style.backgroundColor = '';
                 }
             });
+            */
         </script>
     </body>
 </html>
